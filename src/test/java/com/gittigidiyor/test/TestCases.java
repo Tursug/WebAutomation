@@ -109,8 +109,10 @@ public class TestCases extends BaseTest{
 
     // Adet arttırılarak ürün adedinin 2 olduğu doğrulanır.
     @Test
-    public void test_6(){
+    public void test_6() throws InterruptedException {
         BoxPage boxPage = new BoxPage(driver);
+        Thread.sleep(1000);
+
         boxPage.increase();
         boxPage.waitForPageLoad();
 

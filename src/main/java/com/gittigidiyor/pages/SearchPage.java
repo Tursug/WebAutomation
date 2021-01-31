@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.Random;
+
 
 public class SearchPage extends BasePage{
 
@@ -17,23 +19,7 @@ public class SearchPage extends BasePage{
     @FindBy(xpath = "//BUTTON[@data-cy='search-find-button']")
     private WebElement searchBtn;
 
-    /*
-    @FindBy(xpath = "/html/body/div[5]/div[2]/div/div[2]/div[5]/ul/li[2]/a")
-    private WebElement secondBtn;
-
-    @FindBy(xpath = "(//DIV[@class='gg-w-24 gg-d-24 gg-t-24 gg-m-24 product-title-info'])[1]")
-    private WebElement randomItem;
-
-    @FindBy(xpath = "//BUTTON[@id='add-to-basket']")
-    private WebElement addtoBox;
-
-    @FindBy(xpath = "(//A[@href='https://www.gittigidiyor.com/sepetim'])[2]")
-    private WebElement myBox;
-
-    @FindBy(xpath = "(//A[@href='https://www.gittigidiyor.com/sepetim'][text()='Sepete Git']")
-    private WebElement goBox;
-    */
-
+    // PRICE ELEMENT
     @FindBy(xpath = "//SPAN[@id='sp-price-highPrice']")
     private WebElement price1;
 
@@ -52,11 +38,14 @@ public class SearchPage extends BasePage{
     public void submit() {
         searchBtn.click();
     }
+    Random random = new Random();
+    final int a = random.nextInt(8) + 3;
+    final String s = String.valueOf(a);
 
     // CLICK ITEM IN THE SEARCH PAGE
     public void addToBox(){
 
-        WebElement ele = driver.findElement(By.xpath("(//DIV[@class='gg-w-24 gg-d-24 gg-t-24 gg-m-24 product-title-info'])[3]"));
+        WebElement ele = driver.findElement(By.xpath("(//DIV[@class='gg-w-24 gg-d-24 gg-t-24 gg-m-24 product-title-info'])["+returnRandom()+"]"));
         JavascriptExecutor jse = (JavascriptExecutor)driver;
         jse.executeScript("arguments[0].click()", ele);
     }
@@ -78,6 +67,13 @@ public class SearchPage extends BasePage{
     // ITEM PRICE IN THE SEARCH PAGE
     public String getSearchPrice(){
         return price1.getText();
+    }
+
+    // RETURN RANDOM NUMBER
+    public String returnRandom(){
+        Random random = new Random();
+        final int a = random.nextInt(48) + 1;
+        return String.valueOf(a);
     }
 
 
