@@ -27,7 +27,6 @@ public class BasePage {
 
     // CLICKABLE EXPECTED CONDITION
     public ExpectedCondition<WebElement> elementClickable(WebElement element) {
-        ExpectedCondition<WebElement> clickable=ExpectedConditions.elementToBeClickable((element));
-        return clickable;
+        return ExpectedConditions.elementToBeClickable((element));
     }
 }

@@ -12,10 +12,14 @@ import com.gittigidiyor.pages.HomePage;
 
 import org.openqa.selenium.By;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class TestCases extends BaseTest{
 
-    private final static Logger logger  =  Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    //private final static Logger logger  =  Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private static final Logger logger = LogManager.getLogger(TestCases.class);
 
     // www.gittigidiyor.com sitesi açılır
     @Test
@@ -26,20 +30,22 @@ public class TestCases extends BaseTest{
         homePage.waitForPageLoad();
         Assert.assertEquals("GittiGidiyor - Türkiye'nin Öncü Alışveriş Sitesi", driver.getTitle());
         // System.out.println("Gittigidiyor.com acildi.");
-        logger.log(Level.INFO,"Gittigidiyor.com acildi.");
+        logger.info("Gittigidiyor.com acildi.");
+
 
     }
 
     // Ana sayfanın açıldığı kontrol edilir
     @Test
-    public void test_2(){
+    public void test_2() throws InterruptedException {
 
         HomePage homePage = new HomePage(driver);
+        Thread.sleep(1000);
         homePage.getLoginPage();
         homePage.waitForPageLoad();
         Assert.assertEquals("Üye Girişi - GittiGidiyor", driver.getTitle());
         // System.out.println("Login Sayfasi acildi.");
-        logger.log(Level.INFO,"Login Sayfasi acildi.");
+        logger.info("Login Sayfasi acildi.");
 
     }
 
@@ -53,7 +59,7 @@ public class TestCases extends BaseTest{
         loginPage.waitForPageLoad();
         Assert.assertEquals("dogacanbicer855789", loginPage.getUserName());
         // System.out.println("Kullanici Girisi Basarili.");
-        logger.log(Level.INFO,"Kullanici Girisi Basarili.");
+        logger.info("Kullanici Girisi Basarili.");
 
     }
 
@@ -61,16 +67,17 @@ public class TestCases extends BaseTest{
     // Arama sonuçları sayfasından 2.sayfa açılır.
     // 2.sayfanın açıldığı kontrol edilir.
     @Test
-    public void test_4() {
+    public void test_4() throws InterruptedException {
         SearchPage searchPage = new SearchPage(driver);
         searchPage.enterData("bilgisayar");
         searchPage.submit();
         searchPage.waitForPageLoad();
         searchPage.secondPage();
-
+        Thread.sleep(5000);
         Assert.assertTrue(driver.getTitle().contains("Bilgisayar - GittiGidiyor - 2/"));
+        //Assert.assertTrue(true);
         //System.out.println("2. sayfa acildi.");
-        logger.log(Level.INFO,"2. sayfa acildi.");
+        logger.info("2. sayfa acildi.");
 
     }
 
@@ -82,13 +89,14 @@ public class TestCases extends BaseTest{
         SearchPage searchPage = new SearchPage(driver);
         searchPage.addToBox();
         searchPage.waitForPageLoad();
+        Thread.sleep(5000);
         searchPage.addToBox2();
         //System.out.println("Urun Sepete Eklendi.");
-        logger.log(Level.INFO,"Urun Sepete Eklendi.");
+        logger.info("Urun Sepete Eklendi.");
 
         String price1 = searchPage.getSearchPrice();
         //System.out.println("Sayfa Fiyati : "+price1);
-        logger.log(Level.INFO,"Sayfa Fiyati : "+price1);
+        logger.info("Sayfa Fiyati : "+price1);
 
         Thread.sleep(5000);
 
@@ -98,12 +106,12 @@ public class TestCases extends BaseTest{
         String price2 = boxPage.getCheckoutPrice();
 
         //System.out.println("Sepet Fiyati : " + price2);
-        logger.log(Level.INFO,"Sepet Fiyati : "+price2);
+        logger.info("Sepet Fiyati : "+price1);
 
         if (price1.equals(price2)){
             Assert.assertTrue(true);
             //System.out.println("Fiyatlar ayni.");
-            logger.log(Level.INFO,"Fiyatlar ayni.");
+            logger.info("fiyatlar ayni.");
         }
     }
 
@@ -118,7 +126,7 @@ public class TestCases extends BaseTest{
 
         Assert.assertEquals("2", boxPage.value());
         //System.out.println("Urun Sayisi : "+boxPage.value());
-        logger.log(Level.INFO,"Urun Sayisi : "+boxPage.value());
+        logger.info("Urun Sayisi :"+boxPage.value());
 
     }
 
@@ -131,7 +139,8 @@ public class TestCases extends BaseTest{
         Thread.sleep(3000);
         Boolean isPresent = driver.findElements(By.xpath("/html/body/div[1]/div[2]/div/div[1]/form/div/div/div[2]/div[1]/div[2]/div[6]/div[2]/div[2]/div[5]/div[1]/div[1]/strong")).size() > 0;
         if (!isPresent){
-            logger.log(Level.INFO,"Sepet Boş");
+            Assert.assertTrue(true);
+            logger.info("Sepet Boş");
         }
     }
 
